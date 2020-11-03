@@ -19,5 +19,6 @@ from blog import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.hello),
+    path('index',views.hello),
+    path('',views.index)  ##新增一个新url将文章放在首页
 ]
