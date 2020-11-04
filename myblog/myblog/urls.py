@@ -22,3 +22,9 @@ urlpatterns = [
     path('index',views.hello),
     path('',views.index)  ##新增一个新url将文章放在首页
 ]
+
+# 增加的条目，自定义错误页面
+# handler400 = views.bad_request
+# handler403 = views.permission_denied
+handler404 = views.page_not_found
+# handler500 = views.page_error

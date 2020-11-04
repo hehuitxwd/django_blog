@@ -15,3 +15,65 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+##文章分类
+class Category(models.Model):
+    name = models.CharField('博客分类',max_length=100)
+    index = models.IntegerField(default=999,verbose_name='分类排序')
+
+    class Meta:
+        verbose_name = '博客分类'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+#文章标签
+class Tag(models.Model):
+    name = models.CharField('文章标签',max_length=100)
+
+    class Meta:
+        verbose_name = '文章标签'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+##推荐位
+class Tui(models.Model):
+    name = models.CharField('推荐位',max_length=100)
+
+    class Meta:
+        verbose_name = '推荐位'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
+
+##banner位
+class Banner(models.Model):
+    text_info = models.CharField('标题',max_length=50,default='')
+    img = models.ImageField('轮播图',upload_to='banner/')
+    link_url = models.URLField('图片链接',max_length=100)
+    is_active = models.BooleanField('是否是active',default=False)
+
+    class Meta:
+        verbose_name = '轮播图'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.text_info
+
+#友情链接
+class Link(models.Model):
+    name = models.CharField('链接名称', max_length=20)
+    linkurl = models.URLField('网址',max_length=100)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '友情链接'
+        verbose_name_plural = '友情链接'
+

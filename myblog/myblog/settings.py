@@ -23,7 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '8aj5z^0b=iq)(-3sh4+32f-5*xd5^_#96t(d2yc@((r)(*=4_4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+##这个设置为True时，自定义的404页面无法展示
+DEBUG = False
 
 #ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['*']    ##表示任何域名都能访问
@@ -122,15 +123,13 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 ##设置静态文件目录和名称
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'collectstatic')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
 #设置文件上传路径，图片上传、文件上传都会存放在此目录里
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
