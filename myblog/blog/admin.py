@@ -4,14 +4,14 @@ from .models import Article,Tag,Tui,Category,Banner,Link
 # Register your models here
 @admin.register(Article)
 class ArtcleAdmin(admin.ModelAdmin):
-    #文章列表中想要显示的字段
-    list_display = ('id','title','create_time',)
+    #文章列表展示的字段
+    list_display = ('id', 'category', 'title', 'tui', 'user', 'views', 'create_time')
     ##满十条数据了就自动分页
     list_per_page = 10
-    #后台列表排序方式
+    #文章列表按照哪个字段排序
     ordering = ('-create_time',)
-    ##设置哪些字段点击可以进入到编辑界面
-    list_display_links = ('title',)
+    ##设置列表中点击哪些字段可以进入到编辑界面
+    list_display_links = ('id','title',)
 
 #admin.site.register(Article,ArtcleAdmin)
 #将字段注册到数据库，以便增删改查

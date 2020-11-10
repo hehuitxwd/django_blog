@@ -3,18 +3,7 @@ from django.contrib.auth.models import User
 #导入django自带的用户模块
 # Create your models here.
 from django.db import models
-class Article(models.Model):
-    title = models.CharField('标题',max_length=100)
-    body = models.TextField('内容',max_length=200,blank=True)
-    create_time = models.DateTimeField('发布时间')
-
-    class Meta:
-        verbose_name = '文章'
-        verbose_name_plural = '文章'
-    #当使用print输出对象的时候，只要自己定义了__str__(self)方法，那么就会打印从在这个方法中return的数据
-
-    def __str__(self):
-        return self.title
+from DjangoUeditor.models import UEditorField #头部增加这行代码导入UEditorField
 
 ##文章分类
 class Category(models.Model):
@@ -51,6 +40,38 @@ class Tui(models.Model):
         return self.name
 
 
+##文章
+class Article(models.Model):
+    title = models.CharField('标题',max_length=100)
+    body = models.TextField('内容',max_length=200,blank=True)
+    ##该body支持富文本
+    # body = UEditorField('内容', width=800, height=500,
+    #                     toolbars="full", imagePath="upimg/", filePath="upfile/",
+    #                     upload_settings={"imageMaxSize": 1204000},
+    #                     settings={}, command=None, blank=True
+    #                     )
+    create_time = models.DateTimeField('发布时间',auto_now_add=True)
+    excerpt =   models.TextField('摘要',max_length=200,blank=True)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING, verbose_name='分类', blank=True, null=True)
+
+    tags = models.ManyToManyField(Tag,verbose_name='标签',blank=True)
+    img = models.ImageField(upload_to='article_img/%Y/%m/%d/',verbose_name='文章图片',blank=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='作者',default="")
+    views = models.PositiveIntegerField('阅读量',default=0)
+    tui = models.ForeignKey(Tui, on_delete=models.DO_NOTHING, verbose_name='推荐位', blank=True, null=True)
+    modified_time = models.DateTimeField('修改时间', auto_now=True)
+
+    class Meta:
+        verbose_name = '文章'
+        verbose_name_plural = '文章'
+    #当使用print输出对象的时候，只要自己定义了__str__(self)方法，那么就会打印从在这个方法中return的数据
+
+    def __str__(self):
+        return self.title
+
+
+
+
 ##banner位
 class Banner(models.Model):
     text_info = models.CharField('标题',max_length=50,default='')
@@ -64,6 +85,7 @@ class Banner(models.Model):
 
     def __str__(self):
         return self.text_info
+
 
 #友情链接
 class Link(models.Model):
